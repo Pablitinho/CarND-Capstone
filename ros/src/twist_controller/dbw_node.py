@@ -47,7 +47,7 @@ class DBWNode(object):
             "max_steer_angle": rospy.get_param('~max_steer_angle', 8.),
             "min_speed": 0.1,
             "DBW_FREQ": DBW_FREQ}
-        
+
 
         self.steer_pub = rospy.Publisher('/vehicle/steering_cmd',
                                          SteeringCmd, queue_size=1)
