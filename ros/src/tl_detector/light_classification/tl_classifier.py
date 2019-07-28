@@ -1,8 +1,11 @@
 from styx_msgs.msg import TrafficLight
+import semaphoreDetection as SD
 
 class TLClassifier(object):
     def __init__(self):
-        #TODO load classifier
+        # TODO load classifier
+        # Not using classifier, so not needed
+
         pass
 
     def get_classification(self, image):
@@ -15,5 +18,24 @@ class TLClassifier(object):
             int: ID of traffic light color (specified in styx_msgs/TrafficLight)
 
         """
-        #TODO implement light color prediction
-        return TrafficLight.UNKNOWN
+
+        rospy.logdebug("tl_classifier: Classification requested")
+
+        numRed, numGreen, numAmbar = SD.findSemaphore(image)
+
+        if numRed > 1:
+            rospy.logwarn("tl_classifier: RED light detected")
+            return TrafficLight.RED
+
+        elif numGreen > 1:
+            rospy.logwarn("tl_classifier: GREEN light detected")
+            return TrafficLight.GREEN
+
+        elif numAmbar > 1:
+            rospy.logwarn("tl_classifier: YELLOW light detected")
+            return TrafficLight.YELLOW
+
+        else:
+            rospy.logwarn("tl_classifier: ERROR - UNKNOWN light")
+            return TrafficLight.UNKNOWN
+
