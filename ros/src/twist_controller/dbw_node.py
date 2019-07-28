@@ -30,7 +30,7 @@ Once you have the proposed throttle, brake, and steer values, publish it on the 
 that we have created in the `__init__` function.
 
 '''
-
+DBW_FREQ = 50 #Hz
 class DBWNode(object):
     def __init__(self):
         rospy.init_node('dbw_node')
@@ -44,7 +44,10 @@ class DBWNode(object):
             "wheel_base": rospy.get_param('~wheel_base', 2.8498),
             "steer_ratio": rospy.get_param('~steer_ratio', 14.8),
             "max_lat_accel": rospy.get_param('~max_lat_accel', 3.),
-            "max_steer_angle": rospy.get_param('~max_steer_angle', 8.)}
+            "max_steer_angle": rospy.get_param('~max_steer_angle', 8.),
+            "min_speed": 0.1,
+            "DBW_FREQ": DBW_FREQ}
+        
 
         self.steer_pub = rospy.Publisher('/vehicle/steering_cmd',
                                          SteeringCmd, queue_size=1)
